@@ -19,7 +19,10 @@ public class Room {
     private BigDecimal roomPrice;
     private String roomPhotoUrl;
     private String roomDescription;
-    // private List<Booking> bookings=new ArrayList<>();
+
+    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Booking> bookings = new ArrayList<>();
+
 
     @Override
     public String toString() {
