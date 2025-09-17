@@ -17,7 +17,7 @@ public class Booking {
     private Long id;
 
     @NotNull(message = "check in date is required")
-    private LocalDate checkInData;
+    private LocalDate checkInDate;
     @Future(message = "check out date must be in the future")
     private LocalDate checkOutDate;
 
@@ -57,7 +57,7 @@ public class Booking {
     public String toString() {
         return "Booking{" +
                 "id=" + id +
-                ", checkInData=" + checkInData +
+                ", checkInData=" + checkInDate +
                 ", checkOutDate=" + checkOutDate +
                 ", numOfAdults=" + numOfAdults +
                 ", numOfChildren=" + numOfChildren +
