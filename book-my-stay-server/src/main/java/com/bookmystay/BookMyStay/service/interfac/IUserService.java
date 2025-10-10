@@ -5,7 +5,7 @@ import com.bookmystay.BookMyStay.dto.Response;
 import com.bookmystay.BookMyStay.entity.User;
 
 public interface IUserService {
-    Response register(User loginRequest);
+    Response register(User user);
 
     Response login(LoginRequest loginRequest);
 
