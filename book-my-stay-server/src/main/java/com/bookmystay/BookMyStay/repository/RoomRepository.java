@@ -25,7 +25,6 @@ public interface RoomRepository extends JpaRepository<Room, Long> {
             @Param("roomType") String roomType);
 
 
-
     @Query("SELECT r from Room r where r.id not in (select b.room.id from Booking b)")
     List<Room> getAllAvailableRooms();
 

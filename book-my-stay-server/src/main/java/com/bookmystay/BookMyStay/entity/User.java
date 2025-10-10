@@ -31,8 +31,8 @@ public class User implements UserDetails {
     private String password;
     private String role;
 
-    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Booking> bookings=new ArrayList<>();
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Booking> bookings = new ArrayList<>();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -63,6 +63,7 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
     @Override
     public String getPassword() {
         return password;
