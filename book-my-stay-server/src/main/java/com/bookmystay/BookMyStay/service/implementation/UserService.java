@@ -3,7 +3,6 @@ package com.bookmystay.BookMyStay.service.implementation;
 import com.bookmystay.BookMyStay.dto.LoginRequest;
 import com.bookmystay.BookMyStay.dto.Response;
 import com.bookmystay.BookMyStay.dto.UserDTO;
-import com.bookmystay.BookMyStay.entity.Booking;
 import com.bookmystay.BookMyStay.entity.User;
 import com.bookmystay.BookMyStay.exception.OurException;
 import com.bookmystay.BookMyStay.repository.UserRepository;
@@ -58,7 +57,7 @@ public class UserService implements IUserService {
     public Response login(LoginRequest loginRequest) {
         Response response = new Response();
         try {
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getParssword()));
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
             var user = userRepository.findByEmail(loginRequest.getEmail()).orElseThrow(() -> new OurException("User not found! "));
 
             var token = jwtUtils.generateToken(user);

@@ -34,7 +34,7 @@ public class RoomController {
     }
 
     @PostMapping("/add")
-    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Response> addNewRoom(@RequestParam(value = "photo", required = false) MultipartFile photo,
                                                @RequestParam(value = "rommType", required = false) String roomType,
                                                @RequestParam(value = "roomPrice", required = false) BigDecimal roomPrice,
@@ -81,7 +81,7 @@ public class RoomController {
     }
 
     @PutMapping("/update/{roomId}")
-    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Response> updateRoom(@PathVariable Long roomId,
                                                @RequestParam(value = "photo", required = false) MultipartFile photo,
                                                @RequestParam(value = "rommType", required = false) String roomType,
@@ -93,7 +93,7 @@ public class RoomController {
     }
 
     @DeleteMapping("/deleteRoom/{roomId}")
-    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Response> deleteRoom(@PathVariable ("roomId") Long roomId){
         Response response=roomService.deleteRoom(roomId);
         return  ResponseEntity.status(response.getStatusCode()).body(response);
