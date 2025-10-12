@@ -52,7 +52,7 @@ public class BookingService implements IBookingService {
         Response response = new Response();
         try {
             Booking booking = bookingRepository.findByBookingConfirmationCode(confirmationCode).orElseThrow(() -> new OurException("Booking not found"));
-            BookingDTO bookingDTOS = Utils.mapBookingEntityToBookingDTO(booking);
+            BookingDTO bookingDTOS = Utils.mapBookingEntityToBookingDTOPlusBookedRooms(booking, true);
             response.setStatusCode(200);
             response.setMessage("successful");
             response.setBooking(bookingDTOS);
