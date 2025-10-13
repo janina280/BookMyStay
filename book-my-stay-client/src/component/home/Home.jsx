@@ -11,7 +11,6 @@ const HomePage = () => {
 
     return (
         <div className="home">
-            {/* HERO SECTION */}
             <section>
                 <header className="header-banner">
                     <img
@@ -30,7 +29,6 @@ const HomePage = () => {
                 </header>
             </section>
 
-            {/* ROOM SEARCH */}
             <RoomSearch handleSearchResult={handleSearchResult}/>
             <RoomResult roomSearchResults={roomSearchResults}/>
 
@@ -90,7 +88,6 @@ const HomePage = () => {
             <br/>
             <br/>
 
-            {/* ABOUT SECTION */}
             <section className="about-section">
                 <div className="about-content">
                     <h2>About <span className="phegon-color">Artemis Hotel</span></h2>
@@ -110,7 +107,6 @@ const HomePage = () => {
             <br/>
             <br/>
 
-            {/* FACILITIES SECTION */}
             <section className="facilities-section">
                 <h2>Facilities & Amenities</h2>
                 <div className="service-section">
@@ -158,7 +154,6 @@ const HomePage = () => {
             <br/>
             <br/>
 
-            {/* FOOTER / CONTACT */}
             <footer className="footer">
                 <p>© 2025 Artemis Hotel. All rights reserved.</p>
                 <p>Contact: <a href="mailto:info@artemishotel.com">info@artemishotel.com</a> | +40 723 456 789</p>
