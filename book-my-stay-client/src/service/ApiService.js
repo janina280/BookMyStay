@@ -17,7 +17,7 @@ export default class ApiService {
     }
 
     static async loginUser(loginDetails) {
-        const response = await axios.post(`${this.BASE_URL}/auth.login`, loginDetails)
+        const response = await axios.post(`${this.BASE_URL}/auth/login`, loginDetails)
         return response.data
     }
 
@@ -97,7 +97,7 @@ export default class ApiService {
 
 
     static async deleteRoom(roomId) {
-        const result = await axios.delete(`${this.BASE_URL}/rooms/delete/${roomId}`, {
+        const result = await axios.delete(`${this.BASE_URL}/rooms/deleteRoom/${roomId}`, {
             headers: this.getHeader()
         })
         return result.data
@@ -137,7 +137,7 @@ export default class ApiService {
     }
 
     static async cancelBooking(bookingId) {
-        const result = await axios.delete(`${this.BASE_URL}/bookings/cancel/${bookingId}`, {
+        const result = await axios.delete(`${this.BASE_URL}/bookings/cancel-booking/${bookingId}`, {
             headers: this.getHeader()
         })
         return result.data

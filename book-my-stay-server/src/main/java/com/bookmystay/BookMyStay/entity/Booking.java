@@ -24,7 +24,7 @@ public class Booking {
     @Min(value = 1, message = "Number of adults must not be less that 1")
     private int numOfAdults;
 
-    @Min(value = 1, message = "Number of children must not be less that 0")
+    @Min(value = 0, message = "Number of children must not be less that 0")
     private int numOfChildren;
 
     private int totalNumOfGuest;
@@ -57,7 +57,7 @@ public class Booking {
     public String toString() {
         return "Booking{" +
                 "id=" + id +
-                ", checkInData=" + checkInDate +
+                ", checkInDate=" + checkInDate +
                 ", checkOutDate=" + checkOutDate +
                 ", numOfAdults=" + numOfAdults +
                 ", numOfChildren=" + numOfChildren +

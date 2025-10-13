@@ -87,7 +87,7 @@ public class Utils {
         bookingDTO.setId(booking.getId());
         bookingDTO.setBookingConfirmationCode(booking.getBookingConfirmationCode());
         bookingDTO.setNumOfAdults(booking.getNumOfAdults());
-        bookingDTO.setCheckInData(booking.getCheckInDate());
+        bookingDTO.setCheckInDate(booking.getCheckInDate());
         bookingDTO.setCheckOutDate(booking.getCheckOutDate());
         bookingDTO.setNumOfChildren(booking.getNumOfChildren());
         bookingDTO.setTotalNumOfGuest(booking.getTotalNumOfGuest());
@@ -99,7 +99,7 @@ public class Utils {
         bookingDTO.setId(booking.getId());
         bookingDTO.setBookingConfirmationCode(booking.getBookingConfirmationCode());
         bookingDTO.setNumOfAdults(booking.getNumOfAdults());
-        bookingDTO.setCheckInData(booking.getCheckInDate());
+        bookingDTO.setCheckInDate(booking.getCheckInDate());
         bookingDTO.setCheckOutDate(booking.getCheckOutDate());
         bookingDTO.setNumOfChildren(booking.getNumOfChildren());
         bookingDTO.setTotalNumOfGuest(booking.getTotalNumOfGuest());
@@ -110,7 +110,7 @@ public class Utils {
 
         if (booking.getRoom() != null) {
             RoomDTO roomDTO = new RoomDTO();
-            roomDTO.setId(booking.getRoom().getId());                 // ✅ folosește booking.getRoom()
+            roomDTO.setId(booking.getRoom().getId());
             roomDTO.setRoomDescription(booking.getRoom().getRoomDescription());
             roomDTO.setRoomType(booking.getRoom().getRoomType());
             roomDTO.setRoomPrice(booking.getRoom().getRoomPrice());
