@@ -20,38 +20,38 @@ public class JWTUtils {
 
     @PostConstruct
     public void init() {
-        // Secret key de 40+ caractere
         String secretString = "n4F7qP8rT2vX9bL5zD1wY6kH3sC0mJ8eR2aVqZxN";
         key = Keys.hmacShaKeyFor(secretString.getBytes(StandardCharsets.UTF_8));
     }
 
-    // Generează token pentru un user
     public String generateToken(UserDetails userDetails) {
+        var roles = userDetails.getAuthorities()
+                .stream()
+                .map(authority -> authority.getAuthority())
+                .toList();
+
         return Jwts.builder()
                 .setSubject(userDetails.getUsername())
+                .claim("roles", roles)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
     }
 
-    // Extrage username (subject) din token
     public String extractUsername(String token) {
         return extractClaims(token).getSubject();
     }
 
-    // Verifică dacă token-ul e valid pentru un user
     public boolean isTokenValid(String token, UserDetails userDetails) {
         String username = extractUsername(token);
         return username.equals(userDetails.getUsername()) && !isTokenExpired(token);
     }
 
-    // Verifică dacă token-ul a expirat
     private boolean isTokenExpired(String token) {
         return extractClaims(token).getExpiration().before(new Date());
     }
 
-    // Extrage Claims din token
     private Claims extractClaims(String token) {
         return Jwts.parser()
                 .setSigningKey(key)

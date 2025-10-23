@@ -17,25 +17,30 @@ import java.util.List;
 @RestController
 @RequestMapping("/rooms")
 public class RoomController {
+
     @Autowired
     private IRoomService roomService;
+
     @Autowired
     private IBookingService bookingService;
 
-    @GetMapping("/all")
+    // Obține toate camerele
+    @GetMapping
     public ResponseEntity<Response> getAllRooms() {
         Response response = roomService.getAllRooms();
         return ResponseEntity.status(response.getStatusCode()).body(response);
     }
 
+    // Obține toate tipurile de camere
     @GetMapping("/types")
     public List<String> getAllRoomTypes() {
         return roomService.getAllRoomTypes();
     }
 
-    @PostMapping("/add")
+    // Adaugă o cameră nouă
+    @PostMapping
     @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity<Response> addNewRoom(@RequestParam(value = "photo", required = false) MultipartFile photo,
+    public ResponseEntity<Response> createRoom(@RequestParam(value = "photo", required = false) MultipartFile photo,
                                                @RequestParam(value = "roomType", required = false) String roomType,
                                                @RequestParam(value = "roomPrice", required = false) BigDecimal roomPrice,
                                                @RequestParam(value = "roomDescription", required = false) String description) {
@@ -43,60 +48,63 @@ public class RoomController {
         if (photo == null || photo.isEmpty() || roomType == null || roomType.isBlank() || roomPrice == null) {
             Response response = new Response();
             response.setStatusCode(400);
-            response.setMessage("Please provide values for all fields(photo, roomType, roomPrice!");
+            response.setMessage("Please provide values for all fields (photo, roomType, roomPrice)");
             return ResponseEntity.status(response.getStatusCode()).body(response);
         }
+
         Response response = roomService.addNewRoom(photo, roomType, roomPrice, description);
         return ResponseEntity.status(response.getStatusCode()).body(response);
-
     }
 
-    @GetMapping("/room-by-id/{roomId}")
+    // Obține o cameră după ID
+    @GetMapping("/{roomId}")
     public ResponseEntity<Response> getRoomById(@PathVariable("roomId") Long roomId) {
         Response response = roomService.getRoomById(roomId);
         return ResponseEntity.status(response.getStatusCode()).body(response);
-
     }
 
-    @GetMapping("/all-available-rooms")
-    public ResponseEntity<Response> getAllAvailableRooms() {
-        Response response = roomService.getAllAvailableRooms();
-        return ResponseEntity.status(response.getStatusCode()).body(response);
-    }
+    // Obține camerele disponibile
+    @GetMapping("/available")
+    public ResponseEntity<Response> getAllAvailableRooms(
+            @RequestParam(value = "checkInDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate checkInDate,
+            @RequestParam(value = "checkOutDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate checkOutDate,
+            @RequestParam(value = "roomType", required = false) String roomType) {
 
-    @GetMapping("/available-rooms-by-date-and-type")
-    public ResponseEntity<Response> getAvailableRoomByDataAndType(@RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate checkInDate,
-                                                                  @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate checkOutDate,
-                                                                  @RequestParam(required = false) String roomType) {
-
-        if (checkInDate == null || roomType == null || roomType.isBlank() || checkOutDate == null) {
-            Response response = new Response();
-            response.setStatusCode(400);
-            response.setMessage("Please provide values for all fields(checkInDate, roomType, checkOutDat");
+        // Fără filtre → returnează toate camerele disponibile
+        if (checkInDate == null && checkOutDate == null && (roomType == null || roomType.isBlank())) {
+            Response response = roomService.getAllAvailableRooms();
             return ResponseEntity.status(response.getStatusCode()).body(response);
         }
+
+        // Cu filtre → returnează camerele disponibile după dată și tip
+        if (checkInDate == null || checkOutDate == null || roomType == null || roomType.isBlank()) {
+            Response response = new Response();
+            response.setStatusCode(400);
+            response.setMessage("Please provide values for all fields (checkInDate, checkOutDate, roomType)");
+            return ResponseEntity.status(response.getStatusCode()).body(response);
+        }
+
         Response response = roomService.getAvailableRoomsByDataAndType(checkInDate, checkOutDate, roomType);
         return ResponseEntity.status(response.getStatusCode()).body(response);
-
     }
 
-    @PutMapping("/update/{roomId}")
+    // Actualizează o cameră
+    @PutMapping("/{roomId}")
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Response> updateRoom(@PathVariable Long roomId,
                                                @RequestParam(value = "photo", required = false) MultipartFile photo,
-                                               @RequestParam(value = "rommType", required = false) String roomType,
+                                               @RequestParam(value = "roomType", required = false) String roomType,
                                                @RequestParam(value = "roomPrice", required = false) BigDecimal roomPrice,
                                                @RequestParam(value = "roomDescription", required = false) String description) {
         Response response = roomService.updateRoom(roomId, description, roomType, roomPrice, photo);
         return ResponseEntity.status(response.getStatusCode()).body(response);
-
     }
 
-    @DeleteMapping("/deleteRoom/{roomId}")
+    // Șterge o cameră
+    @DeleteMapping("/{roomId}")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity<Response> deleteRoom(@PathVariable ("roomId") Long roomId){
-        Response response=roomService.deleteRoom(roomId);
-        return  ResponseEntity.status(response.getStatusCode()).body(response);
-
+    public ResponseEntity<Response> deleteRoom(@PathVariable("roomId") Long roomId) {
+        Response response = roomService.deleteRoom(roomId);
+        return ResponseEntity.status(response.getStatusCode()).body(response);
     }
 }
